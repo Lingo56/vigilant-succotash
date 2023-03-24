@@ -1,29 +1,38 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import { useState } from "react";
+import Button from "@mui/material/Button";
 
 import "./App.css";
 
-const Hello = (props) => {
-  return (
-    <div>
-      <p>
-        Hello {props.name} {props.number}
-      </p>
-    </div>
-  );
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return <div>the app is used by pressing the buttons</div>;
+  }
+
+  return <div>button press history: {props.allClicks.join(" ")}</div>;
 };
 
+const MyButton = (props) => (
+  <button onClick={props.handleClick}>{props.text}</button>
+);
+
 const App = () => {
-  const name = "guy";
-  const age = 10;
+  const [value, setValue] = useState(10);
+
+  const setToValue = (newValue) => {
+    console.log("value now", newValue);
+    setValue(newValue);
+  };
 
   return (
     <div>
-      <h1>Greetings</h1>
-
-      <Hello name="cat" number={6 * 20} />
-      <Hello name={name} number={age} />
-      <Hello />
+      {value}
+      <MyButton handleClick={() => setToValue(1000)} text="thousand"></MyButton>
+      <MyButton handleClick={() => setToValue(0)} text="reset"></MyButton>
+      <MyButton
+        handleClick={() => setToValue(value + 1)}
+        text="increment"
+      ></MyButton>
     </div>
   );
 };
