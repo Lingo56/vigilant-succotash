@@ -31,6 +31,10 @@ const ResultPrint = (props) => {
 };
 
 const Statistics = (props) => {
+  const total = props.good + props.neutral + props.bad;
+  const average = (props.good - props.bad) / total;
+  const positive = (props.good / total) * 100;
+
   if (props.good === 0 && props.neutral === 0 && props.bad === 0) {
     return <div>No Feedback Given </div>;
   }
@@ -40,18 +44,9 @@ const Statistics = (props) => {
       <ResultPrint text="Good" result={props.good} />
       <ResultPrint text="Neutral" result={props.neutral} />
       <ResultPrint text="Bad" result={props.bad} />
-      <ResultPrint text="All" result={props.good + props.neutral + props.bad} />
-      <ResultPrint
-        text="Average"
-        result={
-          (props.good - props.bad) / (props.good + props.neutral + props.bad)
-        }
-      />
-      <ResultPrint
-        text="Positive"
-        result={(props.good / (props.good + props.neutral + props.bad)) * 100}
-        percent={true}
-      />
+      <ResultPrint text="All" result={total} />
+      <ResultPrint text="Average" result={average} />
+      <ResultPrint text="Positive" result={positive} percent={true} />
     </table>
   );
 };
