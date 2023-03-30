@@ -5,18 +5,21 @@ const Person = ({ person }) => {
   return <li>{person.name}</li>;
 };
 
-//TODO: add ID to list entries
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas", id: 1 }]);
+  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
   const [newName, setNewName] = useState("");
 
   const addName = (event) => {
     event.preventDefault();
+    const personObj = { name: newName };
 
-    const personObj = { name: newName, id: persons.length + 1 };
-
-    setPersons(persons.concat(personObj));
-    setNewName("");
+    if (!persons.find((p) => p.name === personObj.name)) {
+      setPersons(persons.concat(personObj));
+      setNewName("");
+    } else {
+      alert(`${newName} is already added to phonebook`);
+      setNewName("");
+    }
   };
 
   const handleNameChange = (event) => {
@@ -38,7 +41,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map((person) => (
-          <Person key={person.id} person={person} />
+          <Person key={person.name} person={person} />
         ))}
       </ul>
     </div>
